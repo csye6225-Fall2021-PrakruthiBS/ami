@@ -32,8 +32,6 @@
                 "sudo add-apt-repository universe",
                 "sudo apt-get update -y",
                 "sudo apt-get install -y openjdk-11-jre-headless maven",
-                "sudo apt-get update -y",
-                "sudo apt-get install -y mysql-server",
                 "sudo apt-get install nginx -y"
             ]
         }
