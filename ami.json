@@ -1,10 +1,10 @@
 
 {
-   
 
     "builders": [
         {
             "type": "amazon-ebs",
+            "ssh_wait_timeout": "10000s",
             "profile": "{{user `profile`}}",
             "region": "{{user `aws_region`}}",
             "instance_type": "{{user `instance_type`}}",
@@ -12,7 +12,7 @@
             "source_ami": "{{user `source_ami`}}",
             "ssh_username": "{{user `ssh_username`}}",
             "ami_name": "csye6225_{{timestamp}}",
-            "ami_description": "Ubuntu AMI for csye 6225",
+            "ami_description": "Ubuntu AMI for csye 6225-testing",
             "ami_users": "{{user `prod_aws_account`}}",
             "launch_block_device_mappings":[
                 {
@@ -33,7 +33,19 @@
                 "sudo add-apt-repository universe",
                 "sudo apt-get update -y",
                 "sudo apt-get install -y openjdk-11-jre-headless maven",
-                "sudo apt-get install nginx -y"
+                "sudo apt-get install nginx -y",
+                "sudo apt-get update -y",
+                "sudo apt install ruby-full -y",
+                "sudo apt install wget",
+                "cd /home/ubuntu",
+                "wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install",
+                "chmod +x ./install",
+                "sudo ./install auto > /tmp/logfile",
+                "sudo service codedeploy-agent start",
+                "sudo apt-get update -y",
+                "wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb",
+                "sudo dpkg -i -E ./amazon-cloudwatch-agent.deb"
+                
             ]
         }
     ]
